@@ -25,6 +25,7 @@ class PlantsController extends Controller
         
         $crawler->filter('span[class=b-subfoldertile-title]')->each(function ($node) {
             print $node->text()."\n";
+            // https://laravel.com/docs/5.8/queries#inserts
         });
 
         return view('plants', compact('crawler'));
