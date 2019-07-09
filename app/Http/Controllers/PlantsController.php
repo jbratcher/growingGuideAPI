@@ -20,13 +20,29 @@ class PlantsController extends Controller
 
         $crawler = $client->request(
             'GET',
-            'https://www.burpee.com/gardenadvicecenter/areas-of-interest/vegetables/'
+            'https://world-crops.com/category/crops/vegetables//'
         );
+
+//        $link = $crawler->filter('a[class=czr-title]')->link();
+//        $crawler = $client->click($link);
+
+//        $crawler->filter('div[class=czr-wp-the-content]')->each(function ($node) {
+//            $description = trim($node->text());
+//        });
         
-        $crawler->filter('span[class=b-subfoldertile-title]')->each(function ($node) {
-            print $node->text()."\n";
-            // https://laravel.com/docs/5.8/queries#inserts
+        $crawler->filter('h2[class=entry-title]')->each(function ($node) {
+            $name = trim($node->text());
+            Plant::firstOrCreate([
+                "name" => $name,
+            ]);
         });
+
+//        Plant::firstOrCreate([
+//            "name" => $name,
+//            "description" => $description
+//        ]);
+
+
 
         return view('plants', compact('crawler'));
     }
